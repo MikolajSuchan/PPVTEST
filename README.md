@@ -1,0 +1,1 @@
+Implementacja operacji CRUD (Create, Read, Update, Delete) w Angularze 19 z wykorzystaniem biblioteki NgRx do zarządzania stanem aplikacji. Dodatkowo integracja z JSON-Server, która służy jako API backendowe, oraz implementacja modalnych okien dialogowych (pop-upów) w aplikacji.
