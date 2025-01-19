@@ -1,0 +1,30 @@
+.mdc-card {
+    margin: 2%;
+}
+
+.mat-mdc-form-field {
+    width: 98%;
+    margin: 1%;
+}
+
+.mat-mdc-card-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-mdc-raised-button {
+    background-color: green;
+    color: white;
+
+    &:disabled,
+    &[disabled] {
+        background-color: lightgray;
+        color: gray;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+}
+
+.mdc-button {
+    margin: 2px;
+}
