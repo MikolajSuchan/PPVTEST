@@ -5,9 +5,11 @@ import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { AddEmployeeComponent } from '../add-employee/add-employee.component';
 import { Employee } from '../../models/Employee';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import { EmployeeService } from '../../services/employee.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { deleteEmployee, loadEmployee } from '../../store/employee.action';
+import { getEmptyList } from '../../store/employee.Selector';
 
 @Component({
   selector: 'app-employee',
@@ -30,7 +32,12 @@ export class EmployeeComponent implements OnInit,OnDestroy {
   displayedColumns: string[] = ['id', 'name', 'email', 'phone', 'address', 'city', 'country', 'date', 'action']
   subscription = new Subscription();
 
-  constructor(private dialog:MatDialog,private service:EmployeeService) { 
+  // constructor(private dialog:MatDialog,private service:EmployeeService) { 
+    
+  // }
+
+  constructor(private dialog:MatDialog,private store: Store,
+  ) { 
     
   }
 
@@ -43,12 +50,17 @@ export class EmployeeComponent implements OnInit,OnDestroy {
   }
 
   GetAllEmployee(){
-    let sub= this.service.GetAll().subscribe(item=>{
-      this.emptyList = item;
-      this.dataSource=new MatTableDataSource(this.emptyList);
-    }
-  )
-  this.subscription.add(sub);
+  //   let sub= this.service.GetAll().subscribe(item=>{
+  //     this.emptyList = item;
+  //     this.dataSource=new MatTableDataSource(this.emptyList);
+  //   }
+  // )
+  // this.subscription.add(sub);
+  this.store.dispatch(loadEmployee());
+  this.store.select(getEmptyList).subscribe(item=>{
+    this.emptyList = item;
+    this.dataSource=new MatTableDataSource(this.emptyList);
+  })
 }
 
   addEmployee(){
@@ -62,10 +74,11 @@ export class EmployeeComponent implements OnInit,OnDestroy {
 
   DeleteEmployee(emptyId:number){
     if(confirm('Are you sure you want to delete this record?')){
-      let sub = this.service.Delete(emptyId).subscribe(item=>{
-        this.GetAllEmployee();
-      });
-      this.subscription.add(sub);
+      // let sub = this.service.Delete(emptyId).subscribe(item=>{
+      //   this.GetAllEmployee();
+      // });
+      // this.subscription.add(sub);
+      this.store.dispatch(deleteEmployee({ emptyId: emptyId }));
     }
   }
 

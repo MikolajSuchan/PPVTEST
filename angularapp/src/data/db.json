@@ -1,24 +1,14 @@
 {
   "employee": [
     {
-      "id": "1",
+      "id": "2",
       "name": "1",
       "email": "1",
       "phone": "1",
       "address": "1",
       "city": "1",
       "country": "Polska",
-      "date": "2025-01-19T19:08:09.645Z"
-    },
-    {
-      "id": "2",
-      "name": "2",
-      "email": "2",
-      "phone": "2",
-      "address": "2",
-      "city": "2",
-      "country": "Niemcy",
-      "date": "2025-01-19T19:08:16.506Z"
+      "date": "2025-01-20T12:45:01.371Z"
     }
   ]
 }

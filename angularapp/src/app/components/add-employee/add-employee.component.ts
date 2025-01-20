@@ -9,9 +9,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Employee } from '../../models/Employee';
-import { EmployeeService } from '../../services/employee.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { Store } from '@ngrx/store';
+import { addEmployee, getEmployee, updateEmployee } from '../../store/employee.action';
+import { selectEmployee } from '../../store/employee.Selector';
 
 
 
@@ -36,19 +38,24 @@ export class AddEmployeeComponent implements OnInit {
 
   title: string = 'Add Employee';
   dialogdata: any;
-  isEdit=false;
+  isEdit = false;
 
-  constructor(private service: EmployeeService, private ref: MatDialogRef<AddEmployeeComponent>, private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any) {
+  // constructor(private service: EmployeeService, private ref: MatDialogRef<AddEmployeeComponent>, private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any) {
+
+  // }
+
+  constructor(private store: Store, private ref: MatDialogRef<AddEmployeeComponent>, private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
   ngOnInit(): void {
     this.dialogdata = this.data;
     if (this.dialogdata.code > 0) {
       this.title = 'Edit Employee';
-      this.isEdit=true;
-      this.service.Get(this.dialogdata.code).subscribe(item => {
+      this.isEdit = true;
+      this.store.dispatch(getEmployee({ emptyId: this.dialogdata.code }));
+      this.store.select(selectEmployee).subscribe(item => {
         let _data = item;
-        if(_data!=null){
+        if (_data != null) {
           this.emptyForm.setValue({
             id: _data.id,
             name: _data.name,
@@ -88,22 +95,26 @@ export class AddEmployeeComponent implements OnInit {
         country: this.emptyForm.value.country as string,
         date: new Date(this.emptyForm.value.date as Date),
       }
-      if(this.isEdit){
-        this.service.Update(_data).subscribe(item => {
-          this.toastr.success('Employee updated successfully', 'Updated');
-          this.closepopup();});
+      if (!this.isEdit) {
+        // this.service.Update(_data).subscribe(item => {
+        //   this.toastr.success('Saved successfully', 'Updated');
+        //   this.closepopup();
+        // });
+        this.store.dispatch(addEmployee({ data: _data }));
+      } else {
+        // this.service.Create(_data).subscribe(item => {
+        //   this.toastr.success('Saved successfully', 'Created');
+        //   this.closepopup();
+        // });
+        this.store.dispatch(updateEmployee({ data: _data }));
+      }
+      this.closepopup();
 
-      }else{
-        this.service.Create(_data).subscribe(item => {
-          this.toastr.success('Employee added successfully', 'Created');
-          this.closepopup();
-      });}
     }
   }
 
   closepopup() {
     this.ref.close();
   }
-
 
 }
