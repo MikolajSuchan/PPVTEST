@@ -1,1 +1,20 @@
+<mat-toolbar color="primary">
+    <span class="spacer"></span>
+    <button mat-raised-button (click)="goToHome()">
+        <mat-icon>home</mat-icon>
+        Main Page
+      </button>
+    <button mat-raised-button (click)="goToEmployeeForm()">
+      <mat-icon>person_add</mat-icon>
+      Add Employee
+    </button>
+    <button mat-raised-button (click)="goToProjectForm()">
+        <mat-icon>webhook</mat-icon>
+        Add Project
+    </button>
+    <button mat-raised-button (click)="goToCompanyForm()">
+      <mat-icon>source_enviroment</mat-icon>
+      Add Company
+  </button>
+  </mat-toolbar>
 <router-outlet />

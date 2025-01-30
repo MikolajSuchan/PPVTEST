@@ -1,0 +1,31 @@
+<form [formGroup]="emptyProject" (ngSubmit)="SaveProject()">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h4>{{title}}</h4>
+            </mat-card-title>
+            <mat-card-content>
+                    <mat-form-field>
+                        <mat-label>Project ID</mat-label>
+                        <input matInput formControlName="id">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Project Name</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Employee</mat-label>
+                        <mat-select formControlName="employee">
+                            <mat-option value="">Please select Employee</mat-option>
+                            <mat-option value="Jade">Jade</mat-option>
+                            <mat-option value="John">John</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button type="submit" [disabled]="emptyProject.invalid">Save</button>
+                <a mat-flat-button (click)="closepopup()">Close</a>
+            </mat-card-actions>
+        </mat-card-header>
+    </mat-card>
+</form>

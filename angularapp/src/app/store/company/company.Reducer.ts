@@ -1,35 +1,32 @@
 import { createReducer, on } from "@ngrx/store";
-import { EmployeeState } from "./employee.state";
-import { addEmployeeSuc, deleteEmployeeSuc, getEmployee, loadEmployeeFail, loadEmployeeSuc, updateEmployeeSuc } from "./employee.action";
+import { CompanyState } from "./company.State";
+import { addCompanySuc, deleteCompanySuc, getCompany, loadCompanyFail, loadCompanySuc, updateCompanySuc } from "../company/company.Action";
 
 
-
-
-
-const _employeeReducer = createReducer(EmployeeState,
-    on(loadEmployeeSuc, (state, action) => {
+const _companyReducer = createReducer(CompanyState,
+    on(loadCompanySuc, (state, action) => {
         return {
             ...state,
             list: action.list,
             errormessage: ''
         }
     }),
-    on(loadEmployeeFail, (state, action) => {
+    on(loadCompanyFail, (state, action) => {
         return {
             ...state,
             list: [],
             errormessage: action.errMsg
         }
     }),
-    on(deleteEmployeeSuc, (state, action) => {
-        const _newdata = state.list.filter(o => o.id != action.emptyId)
+    on(deleteCompanySuc, (state, action) => {
+        const _newdata = state.list.filter(o => o.id != action.companyId)
         return {
             ...state,
             list: _newdata,
             errormessage: ''
         }
     }),
-    on(addEmployeeSuc, (state, action) => {
+    on(addCompanySuc, (state, action) => {
         const _newdata = { ...action.data };
         return {
             ...state,
@@ -37,7 +34,7 @@ const _employeeReducer = createReducer(EmployeeState,
             errormessage: ''
         }
     }),
-    on(updateEmployeeSuc, (state, action) => {
+    on(updateCompanySuc, (state, action) => {
         const _newdata = state.list.map(o => {
             return o.id === action.data.id ? action.data : o
         })
@@ -47,8 +44,8 @@ const _employeeReducer = createReducer(EmployeeState,
             errormessage: ''
         }
     }),
-    on(getEmployee, (state, action) => {
-        let _newdata = state.list.find(o =>o.id===action.emptyId);
+    on(getCompany, (state, action) => {
+        let _newdata = state.list.find(o =>o.id===action.companyId);
         if(_newdata==null){
             _newdata=state.emptyobject;
         }
@@ -59,6 +56,6 @@ const _employeeReducer = createReducer(EmployeeState,
     })
 );
 
-export function employeeReducer(state: any, action: any) {
-    return _employeeReducer(state, action);
+export function companyReducer(state: any, action: any) {
+    return _companyReducer(state, action);
 }

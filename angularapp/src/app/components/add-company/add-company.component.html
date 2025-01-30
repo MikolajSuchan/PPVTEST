@@ -1,0 +1,35 @@
+<form [formGroup]="emptyCompany" (ngSubmit)="SaveCompany()">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h4>{{ title }}</h4>
+            </mat-card-title>
+        </mat-card-header>
+        
+        <mat-card-content>
+            <mat-form-field>
+                <mat-label>Company ID</mat-label>
+                <input matInput formControlName="id" type="number">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Company Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Industry</mat-label>
+                <input matInput formControlName="industry">
+            </mat-form-field>
+
+            <mat-checkbox formControlName="isActive">Active Company</mat-checkbox>
+            <mat-checkbox formControlName="hasRemoteWork">Supports Remote Work</mat-checkbox>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-raised-button type="submit" [disabled]="emptyCompany.invalid">Save</button>
+            <a mat-flat-button (click)="closepopup()">Close</a>
+        </mat-card-actions>
+    </mat-card>
+</form>

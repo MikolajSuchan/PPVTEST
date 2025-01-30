@@ -8,8 +8,8 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { deleteEmployee, loadEmployee } from '../../store/employee.action';
-import { getEmptyList } from '../../store/employee.Selector';
+import { deleteEmployee, loadEmployee } from '../../store/employee/employee.Action';
+import { getEmptyList } from '../../store/employee/employee.Selector';
 
 @Component({
   selector: 'app-employee',
@@ -19,8 +19,6 @@ import { getEmptyList } from '../../store/employee.Selector';
     MatDialogModule,
     MatTableModule,
     CommonModule,
-
-
   ],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.scss'

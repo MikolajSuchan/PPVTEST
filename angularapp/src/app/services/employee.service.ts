@@ -31,4 +31,5 @@ export class EmployeeService {
   Delete(emptyId: number) {
     return this.http.delete(this.apiUrl + '/' + emptyId);
   }
+  
 }

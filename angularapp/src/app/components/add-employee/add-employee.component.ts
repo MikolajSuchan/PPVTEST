@@ -12,8 +12,8 @@ import { Employee } from '../../models/Employee';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Store } from '@ngrx/store';
-import { addEmployee, getEmployee, updateEmployee } from '../../store/employee.action';
-import { selectEmployee } from '../../store/employee.Selector';
+import { addEmployee, getEmployee, updateEmployee } from '../../store/employee/employee.Action';
+import { selectEmployee } from '../../store/employee/employee.Selector';
 
 
 
@@ -28,7 +28,6 @@ import { selectEmployee } from '../../store/employee.Selector';
     MatSelectModule,
     MatDatepickerModule,
     MatIconModule,
-
   ],
   templateUrl: './add-employee.component.html',
   styleUrl: './add-employee.component.scss',
@@ -73,10 +72,10 @@ export class AddEmployeeComponent implements OnInit {
 
 
   emptyForm = new FormGroup({
-    id: new FormControl(0, Validators.required),
-    name: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
-    phone: new FormControl('', Validators.required),
+    id: new FormControl(0, [Validators.required, Validators.pattern('^[0-9]+$')]),
+    name: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])),
+    email: new FormControl('', [Validators.required,Validators.email]),
+    phone: new FormControl('', [Validators.required,Validators.pattern('^[0-9]{9,15}$')]),
     address: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
     country: new FormControl('', Validators.required),

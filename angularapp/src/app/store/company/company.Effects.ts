@@ -1,39 +1,38 @@
 import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { EmployeeService } from "../services/employee.service";
-
+import { CompanyService } from "../../services/company.service";
 import { catchError, exhaustMap, map, of, switchMap } from "rxjs";
 import { ToastrService } from "ngx-toastr";
-import { addEmployee, addEmployeeSuc, deleteEmployee, deleteEmployeeSuc, emptyAction, loadEmployee, loadEmployeeFail, loadEmployeeSuc, updateEmployee, updateEmployeeSuc } from "./employee.action";
+import { addCompany, addCompanySuc, deleteCompany, deleteCompanySuc, emptyAction, loadCompany, loadCompanyFail, loadCompanySuc, updateCompany, updateCompanySuc } from "./company.Action";
 
 @Injectable()
-export class emptyEffects {
+export class CompanyEffects {
     actions$ = inject(Actions);
-    service = inject(EmployeeService);
+    service = inject(CompanyService);
     toastr = inject(ToastrService)
 
 
-    _loadEmployee = createEffect(() =>
+    _loadCompany = createEffect(() =>
         this.actions$.pipe(
-            ofType(loadEmployee),
+            ofType(loadCompany),
             exhaustMap(() => {
                 return this.service.GetAll().pipe(
                     map((data) => {
-                        return loadEmployeeSuc({ list: data })
+                        return loadCompanySuc({ list: data })
                     }),
-                    catchError((err) => of(loadEmployeeFail({ errMsg: err.message })))
+                    catchError((err) => of(loadCompanyFail({ errMsg: err.message })))
                 )
             })
         )
     )
 
-    _deleteEmployee = createEffect(() =>
+    _deleteCompany = createEffect(() =>
         this.actions$.pipe(
-            ofType(deleteEmployee),
+            ofType(deleteCompany),
             switchMap((action) => {
-                return this.service.Delete(action.emptyId).pipe(
+                return this.service.Delete(action.companyId).pipe(
                     switchMap((data) => {
-                        return of(deleteEmployeeSuc({ emptyId: action.emptyId }),
+                        return of(deleteCompanySuc({ companyId: action.companyId }),
                         this.Showalert('Deleted Successfully.','pass')
                     )
                     }),
@@ -43,13 +42,13 @@ export class emptyEffects {
         )
     )
 
-    _addEmployee = createEffect(() =>
+    _addCompany = createEffect(() =>
         this.actions$.pipe(
-            ofType(addEmployee),
+            ofType(addCompany),
             switchMap((action) => {
                 return this.service.Create(action.data).pipe(
                     switchMap((data) => {
-                        return of(addEmployeeSuc({ data: action.data }),
+                        return of(addCompanySuc({ data: action.data }),
                         this.Showalert('Created Successfully.','pass')
                     )
                     }),
@@ -59,13 +58,13 @@ export class emptyEffects {
         )
     )
 
-    _updateEmployee = createEffect(() =>
+    _updateCompany = createEffect(() =>
         this.actions$.pipe(
-            ofType(updateEmployee),
+            ofType(updateCompany),
             switchMap((action) => {
                 return this.service.Update(action.data).pipe(
                     switchMap((data) => {
-                        return of(updateEmployeeSuc({ data: action.data }),
+                        return of(updateCompanySuc({ data: action.data }),
                         this.Showalert('Updated Successfully.','pass')
                     )
                     }),
